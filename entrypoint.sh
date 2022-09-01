@@ -1,6 +1,8 @@
 #!/bin/bash
 
 git config --global --add safe.directory /github/workspace
+git config --global user.name 'autobump'
+git config --global user.email 'autobump@users.noreply.github.com'
 
 if [ -n "$(git status --porcelain)" ]; then 
   # Working directory clean
