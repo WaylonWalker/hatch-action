@@ -17,6 +17,8 @@ fi
 hatch env create
 hatch run $beforeCommand
 
+echo "🟢 beforeCommand success"
+
 VERSION=`hatch version`
 
 case $GITHUB_REF in
@@ -66,6 +68,7 @@ case $GITHUB_REF in
 esac
 
 NEW_VERSION=`hatch version`
+echo "🟢 Success: bump version: $VERSION → $NEW_VERSION"
 
 if [ "$VERSION" != "$NEW_VERSION" ] && [ $shouldPublish == true ]; then
 
@@ -75,9 +78,15 @@ if [ "$VERSION" != "$NEW_VERSION" ] && [ $shouldPublish == true ]; then
     git push
     git push --tags
 
+    echo "🟢 Success version push"
+
     hatch build
 
+    echo "🟢 Success: build"
+
     hatch publish
+
+    echo "🟢 Success: publish"
 fi
 
 exit 0
