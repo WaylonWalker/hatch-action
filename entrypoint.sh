@@ -5,7 +5,7 @@ shouldPublish=$2
 
 runner () {
     echo "🟡 starting $@"
-    $@ && echo "🟢 $@ passed" || 🔴 echo "$@ failed"
+    $@ && echo "🟢 $@ passed" || echo "🔴 $@ failed"
 }
 
 git config --global --add safe.directory $GITHUB_WORKSPACE
