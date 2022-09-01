@@ -1,8 +1,7 @@
 #!/bin/bash
 
-if [ -z "$(git status --porcelain)" ]; then 
+if [ -n "$(git status --porcelain)" ]; then 
   # Working directory clean
-else 
   # Uncommitted changes
   echo "There are uncommitted changes, exiting"
   exit 1
