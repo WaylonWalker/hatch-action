@@ -4,7 +4,7 @@ beforeCommand=$1
 shouldPublish=$2
 
 runner () {
-    echo "🟡starting $@"
+    echo "🟡 starting $@"
     $@ && echo "🟢 $@ passed" || 🔴 echo "$@ failed"
 }
 
@@ -90,7 +90,6 @@ if [ "$VERSION" != "$NEW_VERSION" ] && [ $shouldPublish == true ]; then
     echo "🟢 Success version push"
 
     runner hatch build
-
     runner hatch publish
 
 fi
