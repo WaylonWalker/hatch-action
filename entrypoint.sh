@@ -15,7 +15,7 @@ if [ -n "$(git status --porcelain)" ]; then
 fi
 
 hatch env create
-hatch env $beforeCommand
+hatch run $beforeCommand
 
 VERSION=`hatch version`
 
