@@ -1,5 +1,7 @@
 #!/bin/bash
 
+git config --global --add safe.directory /github/workspace
+
 if [ -n "$(git status --porcelain)" ]; then 
   # Working directory clean
   # Uncommitted changes
@@ -7,8 +9,7 @@ if [ -n "$(git status --porcelain)" ]; then
   exit 1
 fi
 
-git config --global user.name 'autobump'
-git config --global user.email 'autobump@users.noreply.github.com'
+
 VERSION=`hatch version`
 
 case $GITHUB_REF in
