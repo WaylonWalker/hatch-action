@@ -68,6 +68,8 @@ git tag $VERSION
 git push
 git push --tags
 
+hatch build
+
 hatch publish
 
 exit 0
