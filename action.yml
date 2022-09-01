@@ -1,0 +1,7 @@
+name: hatch-version-action
+description: Bumps hatch projects in ci
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.version }}
