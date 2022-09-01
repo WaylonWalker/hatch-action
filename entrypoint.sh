@@ -29,33 +29,33 @@ case $GITHUB_REF in
     'refs/heads/alpha')
         hatch version 
         if [[ "$VERSION" == *"a"* ]]; then
-            echo "hatch version alpha"
+            hatch version alpha
         else
-            echo "hatch version minor,alpha"
+            hatch version minor,alpha
         fi
     ;;
 
     'refs/heads/beta')
         if [[ "$VERSION" == *"b"* ]]; then
-            echo "hatch version beta"
+            hatch version beta
         else
-            echo "hatch version minor,beta"
+            hatch version minor,beta
         fi
     ;;
 
     'refs/heads/dev')
         if [[ "$VERSION" == *"dev"* ]]; then
-            echo "hatch version dev"
+            hatch version dev
         else
-            echo "hatch version minor,dev"
+            hatch version minor,dev
         fi
     ;;
 
     'refs/heads/develop')
         if [[ "$VERSION" == *"dev"* ]]; then
-            echo "hatch version dev"
+            hatch version dev
         else
-            echo "hatch version minor,dev"
+            hatch version minor,dev
         fi
     ;;
 esac
