@@ -1,5 +1,8 @@
 #!/bin/bash
 
+beforeCommand=$1
+shouldPublish=$2
+
 git config --global --add safe.directory $GITHUB_WORKSPACE
 git config --global user.name 'autobump'
 git config --global user.email 'autobump@users.noreply.github.com'
@@ -11,6 +14,8 @@ if [ -n "$(git status --porcelain)" ]; then
   exit 1
 fi
 
+hatch env create
+hatch env $beforeCommand
 
 VERSION=`hatch version`
 
@@ -62,14 +67,17 @@ esac
 
 NEW_VERSION=`hatch version`
 
-git add .
-git commit -m "Bump version: $VERSION → $NEW_VERSION"
-git tag $VERSION
-git push
-git push --tags
+if [ "$VERSION" != "$NEW_VERSION" ] && [ $shouldPublish == true ]; then
 
-hatch build
+    git add .
+    git commit -m "Bump version: $VERSION → $NEW_VERSION"
+    git tag $VERSION
+    git push
+    git push --tags
 
-hatch publish
+    hatch build
+
+    hatch publish
+fi
 
 exit 0
