@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 beforeCommand=$1
 shouldPublish=$2
