@@ -3,6 +3,11 @@
 beforeCommand=$1
 shouldPublish=$2
 
+runner () {
+    echo "🟡starting $@"
+    $@ && echo "🟢 $@ passed" || 🔴 echo "$@ failed"
+}
+
 git config --global --add safe.directory $GITHUB_WORKSPACE
 git config --global user.name 'autobump'
 git config --global user.email 'autobump@users.noreply.github.com'
@@ -14,8 +19,12 @@ if [ -n "$(git status --porcelain)" ]; then
   exit 1
 fi
 
-hatch env create
-hatch run $beforeCommand
+runner hatch env create
+
+runner hatch run $beforeCommand
+
+# remove any files such as .coverage
+git reset --hard
 
 echo "🟢 beforeCommand success"
 
@@ -80,13 +89,10 @@ if [ "$VERSION" != "$NEW_VERSION" ] && [ $shouldPublish == true ]; then
 
     echo "🟢 Success version push"
 
-    hatch build
+    runner hatch build
 
-    echo "🟢 Success: build"
+    runner hatch publish
 
-    hatch publish
-
-    echo "🟢 Success: publish"
 fi
 
 exit 0
