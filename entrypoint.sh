@@ -16,7 +16,7 @@ HATCH_INDEX_USER=__token__
 if [ -n "$(git status --porcelain)" ]; then 
   # Working directory clean
   # Uncommitted changes
-  echo "There are uncommitted changes, exiting"
+  echo "🔴 There are uncommitted changes, exiting"
   exit 1
 fi
 
