@@ -74,12 +74,16 @@ case $GITHUB_REF in
             hatch version minor,dev
         fi
     ;;
+    *)
+        echo "🔵 Skipped Version Bump"
+    ;;
 esac
 
 NEW_VERSION=`hatch version`
-echo "🟢 Success: bump version: $VERSION → $NEW_VERSION"
+
 
 if [ "$VERSION" != "$NEW_VERSION" ] && [ $shouldPublish == true ]; then
+    echo "🟢 Success: bump version: $VERSION → $NEW_VERSION"
 
     git add .
     git commit -m "Bump version: $VERSION → $NEW_VERSION"
@@ -92,6 +96,9 @@ if [ "$VERSION" != "$NEW_VERSION" ] && [ $shouldPublish == true ]; then
     runner hatch build
     runner hatch publish
 
+else
+    echo "🔵 Skipped Publish"
 fi
+
 
 exit 0
