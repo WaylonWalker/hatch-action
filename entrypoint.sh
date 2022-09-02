@@ -11,6 +11,7 @@ runner () {
 git config --global --add safe.directory $GITHUB_WORKSPACE
 git config --global user.name 'autobump'
 git config --global user.email 'autobump@users.noreply.github.com'
+HATCH_INDEX_USER=__token__
 
 if [ -n "$(git status --porcelain)" ]; then 
   # Working directory clean
