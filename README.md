@@ -32,7 +32,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: waylonwalker/hatch-version-action@v1
+      - uses: waylonwalker/hatch-action@v1
         with:
           before-command: "test-lint"
 ```
