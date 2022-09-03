@@ -88,7 +88,7 @@ if [ "$VERSION" != "$NEW_VERSION" ] && [ $shouldPublish == true ]; then
 
     git add .
     git commit -m "Bump version: $VERSION → $NEW_VERSION"
-    git tag $VERSION
+    git tag v$VERSION
     git push
     git push --tags
 
