@@ -75,6 +75,15 @@ case $GITHUB_REF in
             hatch version minor,dev
         fi
     ;;
+
+    'refs/heads/patch')
+        if [[ "$VERSION" == *"dev"* ]]; then
+            hatch version dev
+        else
+            hatch version patch,dev
+        fi
+    ;;
+
     *)
         echo "🔵 Skipped Version Bump"
     ;;
