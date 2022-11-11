@@ -20,7 +20,7 @@ if [ -n "$(git status --porcelain)" ]; then
   exit 1
 fi
 
-runner hatch env create
+# runner hatch env create
 
 runner hatch run $beforeCommand
 
