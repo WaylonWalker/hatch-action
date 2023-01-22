@@ -8,16 +8,19 @@ runner () {
     $@ && echo "🟢 $@ passed" || (echo "🔴 $@ failed" && exit 1)
 }
 
-git config --global --add safe.directory $GITHUB_WORKSPACE
+if [[ -n "$GITHUB_WORKSPACE" ]]; then
+    git config --global --add safe.directory $GITHUB_WORKSPACE
+fi
+
 git config --global user.name 'autobump'
 git config --global user.email 'autobump@users.noreply.github.com'
 HATCH_INDEX_USER=__token__
 
-if [ -n "$(git status --porcelain)" ]; then 
-  # Working directory clean
-  # Uncommitted changes
-  echo "🔴 There are uncommitted changes, exiting"
-  exit 1
+if [ -n "$(git status --porcelain)" ]; then
+    # Working directory clean
+    # Uncommitted changes
+    echo "🔴 There are uncommitted changes, exiting"
+    exit 1
 fi
 
 # runner hatch env create
@@ -35,22 +38,22 @@ case $GITHUB_REF in
 
     'refs/heads/main')
         hatch version release
-    ;;
+        ;;
     'refs/heads/master')
         hatch version release
-    ;;
+        ;;
     'refs/heads/release')
         hatch version release
-    ;;
+        ;;
 
     'refs/heads/alpha')
-        hatch version 
+        hatch version
         if [[ "$VERSION" == *"a"* ]]; then
             hatch version alpha
         else
             hatch version minor,alpha
         fi
-    ;;
+        ;;
 
     'refs/heads/beta')
         if [[ "$VERSION" == *"b"* ]]; then
@@ -58,7 +61,7 @@ case $GITHUB_REF in
         else
             hatch version minor,beta
         fi
-    ;;
+        ;;
 
     'refs/heads/dev')
         if [[ "$VERSION" == *"dev"* ]]; then
@@ -66,7 +69,7 @@ case $GITHUB_REF in
         else
             hatch version minor,dev
         fi
-    ;;
+        ;;
 
     'refs/heads/develop')
         if [[ "$VERSION" == *"dev"* ]]; then
@@ -74,7 +77,7 @@ case $GITHUB_REF in
         else
             hatch version minor,dev
         fi
-    ;;
+        ;;
 
     'refs/heads/patch')
         if [[ "$VERSION" == *"dev"* ]]; then
@@ -82,11 +85,11 @@ case $GITHUB_REF in
         else
             hatch version patch,dev
         fi
-    ;;
+        ;;
 
     *)
         echo "🔵 Skipped Version Bump"
-    ;;
+        ;;
 esac
 
 NEW_VERSION=`hatch version`
@@ -105,6 +108,8 @@ if [ "$VERSION" != "$NEW_VERSION" ] && [ $shouldPublish == true ]; then
 
     runner hatch build
     runner hatch publish
+
+    runner gh release create v$NEW_VERSION -F changelog.md dist/*.whl dist/*.tar.gz
 
 else
     echo "🔵 Skipped Publish"
