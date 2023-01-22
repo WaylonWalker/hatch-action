@@ -109,7 +109,7 @@ if [ "$VERSION" != "$NEW_VERSION" ] && [ $shouldPublish == true ]; then
     runner hatch build
     runner hatch publish
 
-    runner gh release create v$NEW_VERSION -F changelog.md dist/*.whl dist/*.tar.gz
+    chown -R 1000 dist/
 
 else
     echo "🔵 Skipped Publish"
