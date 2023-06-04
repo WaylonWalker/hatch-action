@@ -15,7 +15,7 @@ fi
 git config --global user.name ${GITHUB_ACTOR}
 git config --global user.email 'autobump@users.noreply.github.com'
 
-export REPOSITORY_URL=https://pypi.org
+export INPUT_REPOSITORY_URL=https://pypi.org
 export HATCH_INDEX_USER=__token__
 export HATCH_INDEX_AUTH="$(python /app/oidc-exchange.py)"
 
