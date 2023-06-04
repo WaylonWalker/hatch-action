@@ -16,7 +16,7 @@ git config --global user.name ${GITHUB_ACTOR}
 git config --global user.email 'autobump@users.noreply.github.com'
 
 export HATCH_INDEX_USER=__token__
-export HATCH_INDEX_AUTH=${ACTIONS_ID_TOKEN_REQUEST_TOKEN}
+export HATCH_INDEX_AUTH="$(python /app/oidc-exchange.py)"
 
 if [ -n "$(git status --porcelain)" ]; then
     # Working directory clean
