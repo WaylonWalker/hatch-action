@@ -107,14 +107,14 @@ if [ "$VERSION" != "$NEW_VERSION" ] && [ $shouldPublish == true ]; then
     git commit -m "Bump version: $VERSION → $NEW_VERSION"
     git tag v$NEW_VERSION
     git remote -v
-    git push
-    git push --tags
 
     echo "🟢 Success version push"
 
     runner hatch build
     runner hatch publish
 
+    git push
+    git push --tags
     runner gh release create v$NEW_VERSION -F CHANGELOG.md dist/*.whl dist/*.tar.gz
     runner echo "release is complete"
 
