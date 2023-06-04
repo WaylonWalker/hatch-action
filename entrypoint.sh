@@ -12,9 +12,11 @@ if [[ -n "$GITHUB_WORKSPACE" ]]; then
     git config --global --add safe.directory $GITHUB_WORKSPACE
 fi
 
-git config --global user.name 'autobump'
+git config --global user.name ${GITHUB_ACTOR}
 git config --global user.email 'autobump@users.noreply.github.com'
+
 HATCH_INDEX_USER=__token__
+HATCH_INDEX_AUTH=${ACTIONS_ID_TOKEN_REQUEST_TOKEN}
 
 if [ -n "$(git status --porcelain)" ]; then
     # Working directory clean
@@ -101,6 +103,7 @@ if [ "$VERSION" != "$NEW_VERSION" ] && [ $shouldPublish == true ]; then
     git add .
     git commit -m "Bump version: $VERSION → $NEW_VERSION"
     git tag v$NEW_VERSION
+    git remote -v
     git push
     git push --tags
 
@@ -110,6 +113,7 @@ if [ "$VERSION" != "$NEW_VERSION" ] && [ $shouldPublish == true ]; then
     runner hatch publish
 
     runner gh release create v$NEW_VERSION -F CHANGELOG.md dist/*.whl dist/*.tar.gz
+    runner echo "release is complete"
 
 else
     echo "🔵 Skipped Publish"
