@@ -8,5 +8,5 @@ RUN apt update && apt install -y gh;
 RUN pip install hatch;
 WORKDIR /app
 COPY entrypoint.sh /app/entrypoint.sh
-COPY oidc-echange.py /app/oidc-echange.py
+COPY oidc-exchange.py /app/oidc-exchange.py
 ENTRYPOINT ["/app/entrypoint.sh"]
