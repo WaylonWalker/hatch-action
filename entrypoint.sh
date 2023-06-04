@@ -18,6 +18,8 @@ git config --global user.email 'autobump@users.noreply.github.com'
 export HATCH_INDEX_USER=__token__
 export HATCH_INDEX_AUTH="$(python /app/oidc-exchange.py)"
 
+echo "🟢 HATCH_INDEX_AUTH=$HATCH_INDEX_AUTH"
+
 if [ -n "$(git status --porcelain)" ]; then
     # Working directory clean
     # Uncommitted changes
